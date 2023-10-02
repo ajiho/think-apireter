@@ -1,0 +1,38 @@
+{
+  "name": "ajiho/think-response",
+  "description": "Making Thinkphp Framework Quickly Respond to APIs",
+  "keywords": [
+    "thinkphp6",
+    "api",
+    "response",
+    "api-response"
+  ],
+  "homepage": "https://gitee.com/ajiho/think-response",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "ajiho\\response\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "ajiho",
+      "email": "lujiahao@88.com",
+      "homepage": "https://gitee.com/ajiho",
+      "role": "Developer"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "topthink/framework": "^6.0"
+  },
+  "extra": {
+    "think": {
+      "config": {
+        "response": "src/config.php",
+        "status": "src/status.php"
+      }
+    }
+  }
+}
