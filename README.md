@@ -4,9 +4,10 @@
 
 # 特性
 
-- 支持多语言
-- 支持自定义字段
-- 支持直接抛异常,方便喜欢AOP思想处理响应的开发人员
+- 支持修改响应字段的名称(code,msg,data)
+- 配置文件统一管理status状态码
+- 支持多语言(针对msg信息)
+- 成功和失败的快速响应方法
 
 # 安装
 
@@ -36,7 +37,6 @@ return [
     //响应data变量
     'data_var' => 'data',
 ];
-
 ```
 
 `status.php`
@@ -66,7 +66,7 @@ use ajiho\response\Response;
 
 public function index()
 {
-    $users = User::all();
+    $users = User::select();
 
     return Response::ok($users);
 }
@@ -108,6 +108,3 @@ return [
 
 ```
 
-## 抛异常
-
-todo

@@ -8,27 +8,25 @@ use think\facade\Lang;
 
 class Response
 {
-
     /**
      * 通用的响应
      * @param int $code 业务状态码
      * @param string $msg 响应消息
      * @param array $data 返回数据
      * @param int $httpStatus http状态码
-     * @return \think\Response
      */
     public static function response($code = 200, $msg = '', $data = [], $httpStatus = 200)
     {
-        $res = [
-            Config::get('response.code_var') => $code,
-            Config::get('response.msg_var') => empty($msg) ? static::getMsg($code) : $msg,
-            Config::get('response.data_var') => $data
-        ];
-        $res = json_encode($res, JSON_UNESCAPED_SLASHES + JSON_UNESCAPED_UNICODE);
-        $header = [
+
+        \think\Response::create(json_encode([
+            Config::get('response.code_var', 'code') => $code,
+            Config::get('response.msg_var', 'msg') => empty($msg) ? static::getMsg($code) : $msg,
+            Config::get('response.data_var', 'data') => $data
+        ], JSON_UNESCAPED_SLASHES + JSON_UNESCAPED_UNICODE))->header([
             'Content-Type' => 'application/json; charset=utf-8'
-        ];
-        return \think\Response::create($res)->header($header)->code($httpStatus);
+        ])->code($httpStatus)->send();
+        die();
+
     }
 
 
@@ -38,11 +36,10 @@ class Response
      * @param $code int 业务状态码
      * @param $msg string 返回消息
      * @param $httpStatus int http状态码
-     * @return \think\Response
      */
     public static function ok($data = [], $code = 200, $msg = '', $httpStatus = 200)
     {
-        return static::response($code, $msg, $data, $httpStatus);
+        static::response($code, $msg, $data, $httpStatus);
     }
 
 
@@ -52,19 +49,17 @@ class Response
      * @param $msg string 返回消息
      * @param $data array 返回的数据
      * @param $httpStatus int http状态码
-     * @return \think\Response
      */
-    public static function failCode($code = 500, $msg = '', $data = [], $httpStatus = 200)
+    public static function failCode($code = 500, string $msg = '', $data = [], $httpStatus = 200)
     {
-        return static::response($code, $msg, $data, $httpStatus);
+        static::response($code, $msg, $data, $httpStatus);
     }
 
 
-    public static function failMsg($msg = '',$code = 500,  $data = [], $httpStatus = 200)
+    public static function failMsg($msg = '', $code = 500, $data = [], $httpStatus = 200)
     {
-        return static::response($code, $msg, $data, $httpStatus);
+        static::response($code, $msg, $data, $httpStatus);
     }
-
 
 
     private static function getMsg($code)
