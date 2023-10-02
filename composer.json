@@ -25,7 +25,8 @@
   ],
   "minimum-stability": "stable",
   "require": {
-    "topthink/framework": "^6.0"
+    "topthink/framework": "^6.0",
+    "ext-json": "*"
   },
   "extra": {
     "think": {
