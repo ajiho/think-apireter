@@ -40,7 +40,7 @@ class Response
      * @param $httpStatus int http状态码
      * @return \think\Response
      */
-    public static function success($data = [], $code = 200, $msg = '', $httpStatus = 200)
+    public static function ok($data = [], $code = 200, $msg = '', $httpStatus = 200)
     {
         return static::response($code, $msg, $data, $httpStatus);
     }
@@ -54,7 +54,13 @@ class Response
      * @param $httpStatus int http状态码
      * @return \think\Response
      */
-    public static function fail($code = 500, $msg = '', $data = [], $httpStatus = 200)
+    public static function failCode($code = 500, $msg = '', $data = [], $httpStatus = 200)
+    {
+        return static::response($code, $msg, $data, $httpStatus);
+    }
+
+
+    public static function failMsg($msg = '',$code = 500,  $data = [], $httpStatus = 200)
     {
         return static::response($code, $msg, $data, $httpStatus);
     }
