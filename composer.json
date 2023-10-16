@@ -29,12 +29,5 @@
   "require": {
     "topthink/framework": "^6.0 || ^8.0",
     "ext-json": "*"
-  },
-  "extra": {
-    "think": {
-      "config": {
-        "status": "src/status.php"
-      }
-    }
   }
 }

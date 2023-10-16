@@ -12,7 +12,7 @@ if (!function_exists('api_response')) {
      * @param array $data 响应数据
      * @param int $httpStatus http状态码
      */
-    function api_response($code = 200, $msg = '', $data = [], $httpStatus = 200)
+    function api_response(int $code = 200, string $msg = '', array $data = [], int $httpStatus = 200)
     {
         Apireter::response($code, $msg, $data, $httpStatus);
     }
@@ -30,7 +30,7 @@ if (!function_exists('api_ok')) {
      * @param string $msg  响应信息
      * @param int $httpStatus  http状态码
      */
-    function api_ok($data = [], $code = 200, $msg = '', $httpStatus = 200)
+    function api_ok(array $data = [], int $code = 200, string $msg = '', int $httpStatus = 200)
     {
         api_response($code, $msg, $data, $httpStatus);
     }
@@ -46,7 +46,7 @@ if (!function_exists('api_fail')) {
      * @param array $data  返回的数据
      * @param int $httpStatus http状态码
      */
-    function api_fail($msg = '', $code = 500, $data = [], $httpStatus = 200)
+    function api_fail(string $msg = '', int $code = 500, array $data = [], int $httpStatus = 200)
     {
         api_response($code, $msg, $data, $httpStatus);
     }

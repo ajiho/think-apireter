@@ -5,11 +5,9 @@
 ## 特性
 
 - 支持修改响应字段的名称(code,msg,data)
-- 支持配置文件统一管理status状态码
 - 真正的json返回
 - 在任意地方调用直接返回到客户端
 - 无需return、更简短的输出
-- 支持多语言(针对msg信息)
 - 成功和失败的快速响应方法
 
 ## 安装
@@ -18,29 +16,28 @@
 composer require ajiho/think-apireter
 ```
 
-## 配置文件
-
-安装完成后会在`config`目录下生成`status.php`用于统一管理状态码
 
 
-```php
-<?php
-
-return [
-    200 => '请求成功',
-    500 => '请求错误',
-
-    // 定义其它的业务状态码
-    // 20000 => "用户名已经被注册",
-    // 20001 => "验证码不正确",
-];
-
-```
 
 ## 使用
 
 
-### 基本使用
+总共有三个方法,下面是具体的参数和默认值
+
+```php
+\ajiho\Apireter::response(int $code = 200, string $msg = 'success', array $data = [], int $httpStatus = 200)
+\ajiho\Apireter::ok(array $data = [], int $code = 200, string $msg = 'success', int $httpStatus = 200)
+\ajiho\Apireter::fail(string $msg, int $code = 500, array $data = [], int $httpStatus = 200)
+
+//分别对应三个更简短的助手函数,参数相同。
+api_response();
+api_ok();
+api_fail();
+```
+
+`ok`、`fail`方法底层都是基于`response`方法,只是参数顺序改变了而已，这样更方便我们调用。
+
+### 简单示例
 
 ```php
 use ajiho\Apireter;
@@ -64,21 +61,7 @@ public function save()
         api_fail($e->getMessage());
     }
     
-    //执行检测用户入库前是否已经存在，假设这里用户已经存在
-    Apireter::response(40001);
-    //或者助手函数
-    api_response(40001);
-    //此时您就需要去配置文件status.php配置对应的错误信息
-    /*    return [
-            200 => '请求成功',
-            500 => '请求错误',
-        
-            // 定义其它的业务状态码
-            // 40001 => "用户名已经被注册",
-        ];*/
-    
-    
-    
+   
     //快速成功响应数据
     $info = User::create($params, true);
     $user = User::find($info['id']);
@@ -90,42 +73,6 @@ public function save()
 ```
 
 
-- ok、fail方法底层都是基于response方法,只是参数顺序改变了而已，这样方便我们调用。
-- 所有的方法的msg参数如果填了，哪怕你在status.php配置了对应的状态码的信息，也会被覆盖。
-
-
-### 多语言
-
-PS:如果您没有一点多语言基础可以先看官方文档多语言的基本使用
-
-需要开启多语言的中间件(如果是多应用需要两个地方都开启,否则无效)
-
-你想新增一个英文的语言包,您需要复制一份`status.php`配置文件到以下目录
-
-
-
-```
-// 单应用模式
-app/lang/en-us/status.php
-
-
-// 多应用模式
-app/应用/lang/en-us/status.php
-```
-
-```php
-<?php
-
-return [
-    200 => 'success',
-    500 => 'error',
-
-    // 定义其它的业务状态码
-    // 20000 => "User has been registered",
-    // 20001 => "Verification code error",
-];
-
-```
 
 
 
@@ -146,5 +93,53 @@ return [
 }
 ```
 
-全局生效和应用生效您可以创建中间件,然后设置即可。
+全局生效和应用生效您可以创建对应的中间件,然后设置即可。
+
+
+
+### 其它建议
+
+如果你喜欢把所有的状态码都放在一个配置文件里进行管理,你可以在项目里新建文件`config/status.php`
+
+```php
+/**
+ * 该文件存放业务状态码相关的配置
+ */
+
+return [
+    "success" => 1,
+    "error" => 0,
+    "not_login" => -1,
+    "user_is_registered" => -2,
+    "invalid_token" => -3,
+];
+```
+
+然后在代码中如下调用这些状态码
+```php
+api_response(config('status.invalid_token'),'token解析失败,请重新登录');
+
+
+//响应结果
+{
+    "code": -3,
+    "msg": "token解析失败,请重新登录",
+    "data": []
+}
+```
+
+当然了，这都只是个人建议，直接在控制器方法中直接返回错误信息更简单方便
+
+```php
+api_fail('token解析失败,请重新登录',403);
+
+//响应结果
+{
+    "code": 403,
+    "msg": "token解析失败,请重新登录",
+    "data": []
+}
+```
+
+
 
