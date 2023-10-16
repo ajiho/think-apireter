@@ -1,19 +1,21 @@
 {
-  "name": "ajiho/think-response",
-  "description": "Making Thinkphp Framework Quickly Respond to APIs",
+  "name": "ajiho/think-apireter",
+  "description": "Quickly return a unified API format for the thinkphp6 framework",
   "keywords": [
     "thinkphp6",
     "api",
-    "response",
-    "api-response"
+    "response"
   ],
-  "homepage": "https://gitee.com/ajiho/think-response",
+  "homepage": "https://gitee.com/ajiho/think-apireter",
   "type": "library",
   "license": "MIT",
   "autoload": {
     "psr-4": {
-      "ajiho\\response\\": "src/"
-    }
+      "ajiho\\": "src/"
+    },
+    "files": [
+      "src/helper.php"
+    ]
   },
   "authors": [
     {
@@ -31,7 +33,6 @@
   "extra": {
     "think": {
       "config": {
-        "response": "src/config.php",
         "status": "src/status.php"
       }
     }
