@@ -25,11 +25,20 @@ composer require ajiho/think-apireter
 总共有三个方法,下面是具体的参数和默认值
 
 ```php
-\ajiho\Apireter::response(int $code = 200, string $msg = 'success', array $data = [], int $httpStatus = 200)
-\ajiho\Apireter::ok(array $data = [], int $code = 200, string $msg = 'success', int $httpStatus = 200)
-\ajiho\Apireter::fail(string $msg, int $code = 500, array $data = [], int $httpStatus = 200)
+/**
+ * 参数的类型和说明
+ * @param int $code 状态码
+ * @param string $msg 响应信息
+ * @param mixed $data 响应数据
+ * @param int $httpStatus http状态码
+ */
 
-//分别对应三个更简短的助手函数,参数相同。
+\ajiho\Apireter::response(int $code = 200, string $msg = 'success', $data = [], int $httpStatus = 200)
+\ajiho\Apireter::ok($data = [], int $code = 200, string $msg = 'success', int $httpStatus = 200)
+//失败的快速响应方法,错误信息是必填的。
+\ajiho\Apireter::fail(string $msg, int $code = 500, $data = [], int $httpStatus = 200)
+
+//分别对应三个更便捷简短的助手函数,参数相同。
 api_response();
 api_ok();
 api_fail();
