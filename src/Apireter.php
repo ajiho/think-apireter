@@ -37,12 +37,12 @@ class Apireter
 
     /**
      * 通用的响应
-     * @param int $code  状态码
-     * @param string $msg  响应信息
-     * @param array $data  响应数据
+     * @param int $code 状态码
+     * @param string $msg 响应信息
+     * @param mixed $data 响应数据
      * @param int $httpStatus http状态码
      */
-    public static function response(int $code = 200, string $msg = 'success', array $data = [], int $httpStatus = 200)
+    public static function response(int $code = 200, string $msg = 'success', $data = [], int $httpStatus = 200)
     {
         \think\Response::create(json_encode([
             static::$codeField => $code,
@@ -57,12 +57,12 @@ class Apireter
 
     /**
      * 成功的快速响应方法
-     * @param array $data 响应数据
+     * @param mixed $data 响应数据
      * @param int $code 状态码
-     * @param string $msg  响应信息
-     * @param int $httpStatus  http状态码
+     * @param string $msg 响应信息
+     * @param int $httpStatus http状态码
      */
-    public static function ok(array $data = [], int $code = 200, string $msg = 'success', int $httpStatus = 200)
+    public static function ok($data = [], int $code = 200, string $msg = 'success', int $httpStatus = 200)
     {
         static::response($code, $msg, $data, $httpStatus);
     }
@@ -72,10 +72,10 @@ class Apireter
      * 失败的快速响应方法
      * @param string $msg 错误信息
      * @param int $code 状态码
-     * @param array $data  返回的数据
+     * @param mixed $data 返回的数据
      * @param int $httpStatus http状态码
      */
-    public static function fail(string $msg, int $code = 500, array $data = [], int $httpStatus = 200)
+    public static function fail(string $msg, int $code = 500, $data = [], int $httpStatus = 200)
     {
         static::response($code, $msg, $data, $httpStatus);
     }
