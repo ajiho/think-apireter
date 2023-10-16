@@ -1,8 +1,8 @@
-# think-response
+## think-apireter
 
 用于thinkphp6.0.+前后端分离开发、或ajax请求时快速响应统一的数据格式
 
-# 特性
+## 特性
 
 - 支持修改响应字段的名称(code,msg,data)
 - 支持配置文件统一管理status状态码
@@ -12,17 +12,16 @@
 - 支持多语言(针对msg信息)
 - 成功和失败的快速响应方法
 
-# 安装
+## 安装
 
 ```
 composer require ajiho/think-apireter
 ```
 
-# 配置文件
+## 配置文件
 
 安装完成后会在`config`目录下生成`status.php`用于统一管理状态码
 
-`status.php`
 
 ```php
 <?php
@@ -38,10 +37,10 @@ return [
 
 ```
 
-# 使用
+## 使用
 
 
-## 基本使用
+### 基本使用
 
 ```php
 use ajiho\Apireter;
@@ -95,7 +94,7 @@ public function save()
 - 所有的方法的msg参数如果填了，哪怕你在status.php配置了对应的状态码的信息，也会被覆盖。
 
 
-## 多语言
+### 多语言
 
 PS:如果您没有一点多语言基础可以先看官方文档多语言的基本使用
 
@@ -127,4 +126,25 @@ return [
 ];
 
 ```
+
+
+
+### 更改响应字段名称
+
+
+单次生效
+
+```php
+\ajiho\Apireter::setField('status', 'message', 'result')
+\ajiho\Apireter::fail('文件上传错误');
+
+//返回结果
+{
+    "status": 500,
+    "message": "文件上传错误",
+    "result": []
+}
+```
+
+全局生效和应用生效您可以创建中间件,然后设置即可。
 
